@@ -18,6 +18,7 @@ public class EventController {
         events.add("Strange Loop");
         events.add("Apple WWDC");
         events.add("SpringOne Platform");
+        events.add("Thymeleaf Template");
         model.addAttribute("events", events);
 
         return "events/index";
