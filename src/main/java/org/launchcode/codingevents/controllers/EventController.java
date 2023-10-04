@@ -15,7 +15,7 @@ import java.util.List;
 public class EventController {
 
     private static List<String> events = new ArrayList<>();
-    @GetMapping
+    @GetMapping("")
     public String displayAllEvents(Model model){
 
 
