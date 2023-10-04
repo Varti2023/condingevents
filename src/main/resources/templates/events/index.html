@@ -6,10 +6,12 @@
 </head>
 <body>
 <h1>All Events</h1>
+<nav th:replace = "fragments :: navigation"></nav>
     <ul>
         <th:block th:each="event : ${events}">
             <li th:text = "${event}"></li>
         </th:block>
     </ul>
+
 </body>
 </html>
