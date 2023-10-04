@@ -11,13 +11,11 @@ import java.util.List;
 @Controller
 @RequestMapping("events")
 public class EventController {
-    @GetMapping("")
+
+    private static List<String> events = new ArrayList<>();
+    @GetMapping
     public String getEvents(Model model){
-        List<String> events = new ArrayList<>();
-        events.add("Code With Pride");
-        events.add("Strange Loop");
-        events.add("Apple WWDC");
-        events.add("SpringOne Platform");
+        model.addAttribute("title", "All Events");
         model.addAttribute("events", events);
 
         return "events/index";
@@ -28,4 +26,3 @@ public class EventController {
         return "events/create";
     }
 }
-git
