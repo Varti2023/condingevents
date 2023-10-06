@@ -37,7 +37,6 @@ public class EventController {
         EventData.add(newEvent);
         return "redirect:/events";
     }
-
     @GetMapping("delete")
     public String displayDeleteEvent(Model model){
         model.addAttribute("title", "Delete Events");
@@ -53,5 +52,23 @@ public class EventController {
             }
         }
           return "redirect:/events";
+    }
+    @GetMapping("edit/{eventId}")
+    public String displayEditForm(Model model, @PathVariable int eventId) {
+
+        Event editEvent = EventData.getById(eventId);
+        // controller code will go here
+        model.addAttribute("event",editEvent);
+        String title = "Edit event "+editEvent.getName() +"( "+editEvent.getId()+")";
+        model.addAttribute("title",title);
+        return "events/edit";
+    }
+    @PostMapping("edit")
+    public String processEditForm(int eventId, String name, String description) {
+
+        Event eventEdited  = EventData.getById(eventId);
+        eventEdited.setName(name);
+        eventEdited.setDescription(description);
+        return "redirect:/events";
     }
 }
