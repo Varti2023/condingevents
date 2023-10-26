@@ -1,5 +1,8 @@
 package org.launchcode.codingevents.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
@@ -9,12 +12,12 @@ import java.util.Date;
 import java.util.Objects;
 import jakarta.validation.constraints.Size;
 
-
+@Entity
 public class Event {
 
+    @Id
+    @GeneratedValue
     private int id;
-    private static int nextId=1;
-
     @NotBlank(message="Name is required")
     @Size(min =3, max=50 , message="Name must be between 3 to 50 characters.")
     private String name;
@@ -36,9 +39,7 @@ public class Event {
         this.description=description;
         this.location=location;
         this.contactEmail=contactEmail;
-        this.id=nextId;
         this.type = type;
-        nextId++;
     }
 
     public int getId() {
