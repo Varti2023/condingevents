@@ -9,10 +9,7 @@ import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("eventCategories")
@@ -45,6 +42,23 @@ public class EventCategoryController {
                 return "eventCategories/create";
             }
             eventCategoryRepository.save(eventCategory);
+            return "redirect:/eventCategories";
+        }
+
+        @GetMapping("delete")
+        public String displayDeleteEventCategory(Model model){
+            model.addAttribute("title", "Delete Category");
+            model.addAttribute("eventCategories", eventCategoryRepository.findAll());
+            return "eventCategories/delete";
+        }
+
+        @PostMapping("delete")
+        public String deleteEvent(@RequestParam(required = false) int[] eventCategoryId){
+            if(eventCategoryId!=null) {
+                for (int id : eventCategoryId) {
+                    eventCategoryRepository.deleteById(id);
+                }
+            }
             return "redirect:/eventCategories";
         }
 

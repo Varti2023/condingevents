@@ -6,3 +6,10 @@ color : purple;
 error{
 color: red;
 }
+
+checkbox{
+border:2px;
+dotted #00f;
+display:block;
+background:#ff0000;
+}
