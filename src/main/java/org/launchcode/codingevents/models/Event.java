@@ -1,14 +1,16 @@
 package org.launchcode.codingevents.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import jakarta.validation.constraints.Size;
 
@@ -18,65 +20,49 @@ public class Event extends AbstractEntity{
     @NotBlank(message="Name is required")
     @Size(min =3, max=50 , message="Name must be between 3 to 50 characters.")
     private String name;
-    @Size(max=500, message = "Description too long.")
-    private String description;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid Email. Try again")
-    private String contactEmail;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails eventDetails;
+    @ManyToOne
+    @NotNull(message="Category is required")
+    private EventCategory eventCategory;
 
-    private EventType type;
-    private String location;
-
+    @ManyToMany
+    private final List<Tag> tags = new ArrayList<>();
     public Event() {
     }
-
-    public Event(String name, String description, String location, String contactEmail, EventType type) {
+    public Event(String name, String location, EventCategory eventCategory) {
         this.name = name;
-        this.description=description;
-        this.location=location;
-        this.contactEmail=contactEmail;
-        this.type = type;
+        this.eventCategory = eventCategory;
     }
-    public EventType getType() {
-        return type;
+    public EventCategory getEventCategory() {
+        return eventCategory;
     }
-
-    public void setType(EventType type) {
-        this.type = type;
+    public void setEventCategory(EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+
+    public EventDetails getEventDetails() {
+        return eventDetails;
+    }
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
+    }
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void addTag(Tag tag){
+        this.tags.add(tag);
     }
 
     @Override
